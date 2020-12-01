@@ -1,0 +1,3 @@
+.ico
+x-tx-host: mayyb.3g.qq.com
+Host: 101.227.143.74:80

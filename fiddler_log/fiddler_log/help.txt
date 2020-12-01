@@ -1,0 +1,4 @@
+oSession.HTTPMethodIs('connect'))
+
+
+.cur

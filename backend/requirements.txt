@@ -1,0 +1,7 @@
+Flask==1.0
+numpy==1.16.4
+chardet==3.0.4
+Flask_Cors==3.0.8
+requests==2.20.0
+PyMySQL==0.9.3
+Flask_RESTful==0.3.7
