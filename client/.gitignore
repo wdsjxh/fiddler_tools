@@ -25,3 +25,6 @@ docs/_book
 # TODO: where does this rule come from?
 test/
 
+# Dependency directories
+node_modules/
+jspm_packages/
