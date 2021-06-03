@@ -40,7 +40,7 @@ module.exports = {
 
     proxy: {
       [process.env.VUE_APP_BASE_API]: {
-        target: '域名或ip',
+        target: process.env.VUE_APP_BASE_API,
         ws: true,
         changeOrigin: true,
         pathRewrite: {
@@ -61,7 +61,7 @@ module.exports = {
       }
     }
   },
-  configureWebpack(config){
+  configureWebpack(config) {
     if (process.env.NODE_ENV === 'production') {
       config.optimization.minimizer[0].options.terserOptions.compress.warnings = false
       config.optimization.minimizer[0].options.terserOptions.compress.drop_console = true
@@ -120,7 +120,7 @@ module.exports = {
             .plugin('ScriptExtHtmlWebpackPlugin')
             .after('html')
             .use('script-ext-html-webpack-plugin', [{
-            // `runtime` must same as runtimeChunk name. default is `runtime`
+              // `runtime` must same as runtimeChunk name. default is `runtime`
               inline: /runtime\..*\.js$/
             }])
             .end()
