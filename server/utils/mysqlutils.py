@@ -7,6 +7,8 @@ from utils.timeutils import datetime_add8
 from utils.timeutils import make_year_month_dict
 from config.dbconfig import dbconfig
 from utils.encryutils import encryutils
+from urllib import parse
+import os
 
 
 class mysqlutil:
@@ -138,11 +140,32 @@ class mysqlutil:
         self.sqldata = []
 
     def get_conn(self):
-        conn = pymysql.connect(host=self.mydbconfig.getdbconfig()["mysqlhost"],
-                               user=self.mydbconfig.getdbconfig()["mysqluser"],
-                               password=self.mydbconfig.getdbconfig()["mysqlpassword"],
-                               db=self.mydbconfig.getdbconfig()["mysqldbname"],
-                               port=self.mydbconfig.getdbconfig()["mysqlport"],
+        my_host = ""
+        my_port = 3306
+        my_user = ""
+        my_password = ""
+        my_db = ""
+
+        if os.environ.get('MYSQL_URI'):
+            MYSQL_URI = os.environ.get('MYSQL_URI')
+            parser = parse.urlparse(MYSQL_URI)
+            my_host = parser.hostname
+            my_port = int(parser.port)
+            my_user = parser.username
+            my_password = parser.password
+            my_db = parser.path.replace("/", "")
+        else:
+            my_host = self.mydbconfig.getdbconfig()["mysqlhost"]
+            my_user = self.mydbconfig.getdbconfig()["mysqluser"]
+            my_password = self.mydbconfig.getdbconfig()["mysqlpassword"]
+            my_db = self.mydbconfig.getdbconfig()["mysqldbname"]
+            my_port = self.mydbconfig.getdbconfig()["mysqlport"]
+
+        conn = pymysql.connect(host=my_host,
+                               user=my_user,
+                               password=my_password,
+                               db=my_db,
+                               port=my_port,
                                charset='utf8'
                                )
         return conn
