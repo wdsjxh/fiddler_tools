@@ -9,7 +9,7 @@ RUN apt-get update
 RUN apt-get install -y openresty
 COPY ./deploy /fiddler_tools/deploy
 RUN pip install --upgrade pip setuptools==45.2.0
-RUN pip install -i https://pypi.tuna.tsinghua.edu.cn/simple -r /fiddler_tools/deploy/pyenv/requirements.txt -U
+RUN pip install -i https://pypi.douban.com/simple/ -r /fiddler_tools/deploy/pyenv/requirements.txt -U
 RUN cp /fiddler_tools/deploy/nginx/*.conf /usr/local/openresty/nginx/conf/
 RUN cp /fiddler_tools/deploy/supervisor/*.conf /etc/supervisor/conf.d/
 COPY ./client/dist /fiddler_tools/client/dist
