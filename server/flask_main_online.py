@@ -2,7 +2,10 @@ import copy
 import numpy
 from utils.timeutils import datetime_add8
 import json
-from flask_restful import Api
+try:
+    from flask_restful import Api
+except Exception as e:
+    pass
 from flask import Flask
 from flask import request
 from flask_cors import *
@@ -11,16 +14,23 @@ from utils.encryutils import encryutils
 from config.dbconfig import dbconfig
 from flask import render_template
 
-app = Flask(__name__)
+# app = Flask(__name__)
 
 
-# app = Flask(__name__,
-#             static_folder="./dist/static",
-#             template_folder="./dist")
+app = Flask(__name__,
+            static_folder="/fiddler_tools/client/dist/static",
+            template_folder="/fiddler_tools/client/dist/")
+
 
 @app.route('/')
 def index():
     return render_template("index.html")
+
+
+@app.route('/test_nginx')
+def test_nginx():
+    return json.dumps(
+        {"code": 20000, "data": "test_nginx"})
 
 
 api = Api(app)
