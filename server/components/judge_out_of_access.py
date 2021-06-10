@@ -1,6 +1,7 @@
 import time
+import sys
+sys.path.append("../")
 from run import judge_out_of_access
-
 
 class Judge_out_of_access:
     def __init__(self):

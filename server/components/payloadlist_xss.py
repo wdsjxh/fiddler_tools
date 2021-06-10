@@ -1,4 +1,6 @@
 import time
+import sys
+sys.path.append("../")
 from run import payloadlist_xss
 
 
