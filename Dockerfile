@@ -2,7 +2,7 @@ FROM python:3.7-stretch
 ENV TZ=Asia/Shanghai
 EXPOSE 80
 RUN apt-get update
-RUN apt-get install --no-install-recommends -y vim net-tools curl gnupg git redis-server supervisor software-properties-common wget
+RUN apt-get install --no-install-recommends -y  apt-transport-https vim  curl gnupg git redis-server supervisor software-properties-common wget
 RUN curl https://openresty.org/package/pubkey.gpg | apt-key add -
 RUN add-apt-repository -y "deb http://openresty.org/package/debian stretch openresty"
 RUN apt-get update
