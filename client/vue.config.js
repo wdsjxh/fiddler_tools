@@ -40,8 +40,8 @@ module.exports = {
 
     proxy: {
       [process.env.VUE_APP_BASE_API]: {
-        target: 'http://192.168.32.132/api',
-        // target: 'http://172.31.61.132',
+        // target: 'http://192.168.32.132/api',
+        target: 'http://127.0.0.1/api',
         ws: true,
         changeOrigin: true,
         pathRewrite: {
@@ -70,7 +70,6 @@ module.exports = {
       config.optimization.minimizer[0].options.terserOptions.compress.pure_funcs = ['console.log']
     }
   },
-
   chainWebpack(config) {
     // it can improve the speed of the first screen, it is recommended to turn on preload
     config.module.rule('md')
@@ -83,7 +82,6 @@ module.exports = {
       .options({
         raw: true
       })
-
     config.plugin('preload').tap(() => [
       {
         rel: 'preload',
