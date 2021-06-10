@@ -1,4 +1,6 @@
 import time
+import sys
+sys.path.append("../")
 from utils.mysqlutils import mysqlutil
 from utils.deal_dict_class import returnreplacejson_payload
 import json

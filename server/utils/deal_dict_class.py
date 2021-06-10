@@ -2,6 +2,8 @@
 import copy
 import json
 import time
+import sys
+sys.path.append("../")
 from utils.timeutils import istimestamp
 from utils.timeutils import isdatetimestring
 from utils.timeutils import isexpstring

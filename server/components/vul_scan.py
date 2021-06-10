@@ -2,7 +2,8 @@ from multiprocessing import Pool
 from multiprocessing import cpu_count
 import json
 import copy
-
+import sys
+sys.path.append("../")
 from data.myData import myData
 from components.judge_out_of_access import Judge_out_of_access
 from components.payloadlist_xss import Payloadlist_xss
