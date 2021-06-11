@@ -135,7 +135,7 @@ release  编译好的文件
    sudo docker restart CONTAINER_ID
    ```
 
-   访问http://192.168.32.132即可，VPS直接对应外网IP
+   访问 http://192.168.32.132 即可，VPS直接对应外网IP
 
 ## 源码安装
 
