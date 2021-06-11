@@ -19,6 +19,124 @@ release  编译好的文件
 
 ![Dashboard](./img/Snipaste_2020-11-30_16-15-29.png)
 
+## Change:
+
+2021.6.11——添加docker部署
+
+## Docker安装（推荐）以Kali2021.1版本部署为例
+
+1. 宿主机MySQL配置，目前使用的宿主机MySQL保存数据
+
+   1. 新建数据库fiddler_log
+
+      ```mysql
+      CREATE fiddler_log IF NOT EXISTS
+      ```
+
+   2. 导入SQL文件，生成表结构
+
+      导入项目根目录下fiddler_log_structure.sql文件
+
+      ```Mysql
+      source ./fiddler_log_structure.sql
+      ```
+
+   3. 配置docker访问宿主机MySQL权限
+
+      1. iptables开启允许docker访问宿主机MySQL端口
+
+         172.17.0.2是docker容器默认IP，请根据实际情况修改
+
+         ```bash
+         sudo iptables -I INPUT -s 172.17.0.2 -p tcp --dport 3306 -j ACCEPT
+         ```
+
+      2. 设置MySQL监听非本机
+
+         修改MySQL配置文件，Kali是在50-server.cnf文件
+
+         ```bash
+         cd /etc/mysql/mariadb.conf.d
+         ```
+
+         ```bash
+         sudo vim 50-server.cnf
+         ```
+
+         找到bind-address 127.0.0.1那行，最前面添加#注释
+
+         重启MySQL服务
+
+         ```bash
+         sudo systemctl restart  mysql.service
+         ```
+
+      3. 授予docker对Mysql数据库操作权限
+
+         ```bash
+         sudo mysql -uroot -p
+         ```
+
+         进入MySQL后，授权对应docker容器IP（172.17.0.2）访问fiddler_log数据库权限
+
+         ```mysql
+         GRANT ALL PRIVILEGES ON fiddler_log.* TO 'root'@'172.17.0.2' IDENTIFIED BY 'PASSWORD' WITH GRANT OPTION; 
+         ```
+
+         刷新权限
+
+         ```mysql
+         flush privileges;
+         ```
+
+         重启MySQL服务
+
+         ```bash
+         sudo systemctl restart  mysql.service
+         ```
+
+2. 拉取Docker镜像
+
+   ```bash
+   sudo docker push kalagin/fiddler_tools:v1.0
+   ```
+
+3. 启动容器并修改后端接口
+
+   ```bash
+   sudo docker run -ti -p 80:80 -e MYSQL_URI=mysql://root:PASSWORD@192.168.32.132:3306/fiddler_log -d kalagin/fiddler_tools:v1.0
+   ```
+
+   其中PASSWORD对应数据库密码，IP对应宿主机IP
+
+   查看容器CONTAINER ID
+
+   ```bash
+   sudo docker ps -a
+   ```
+
+   进入容器
+
+   ```bash
+   sudo docker exec -it CONTAINER_ID bash
+   ```
+
+   ```bash
+   cd /fiddler_tools/client/dist/
+   ```
+
+   config.js是配置后端接口文件
+
+   修改app_api_url为自己ip地址，VPS的话是外网IP，注意后面带一个/api
+
+4. 重启容器
+
+   ```bash
+   sudo docker restart CONTAINER_ID
+   ```
+
+   访问http://192.168.32.132即可，VPS直接对应外网IP
+
 ## 源码安装
 
 插件编译
@@ -39,14 +157,17 @@ release  编译好的文件
 线上部署推荐使用Flask+Nginx+Gunicorn+HTTPS，详细部署请参考其他教程
 
 前端打包
-1.` npm install`
+ 1. 安装依赖
+
+    ```bash
+     npm install
+    ```
+
 2. 修改接口地址  
-vue.config.js中  proxy——process.env.VUE_APP_BASE_API——target中域名或ip
-开发环境
-.env.development    VUE_APP_BASE_API接口
-线上打包
-.env.production     VUE_APP_BASE_API接口
+    修改public/config.js中app_api_url为自己IP地址，注意带/api
+
 3. 开发环境 `npm run dev`  上线打包 `npm run build:prod`
+
 4. 打包好的dist文件夹放在后端根目录下,与flask文件中 static_folder="./dist/static",template_folder="./dist")对应
 
 ## 使用步骤
