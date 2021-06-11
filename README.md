@@ -7,11 +7,15 @@
 
 ## 技术架构
 
-Fiddler插件：C#开发   VS2015编译  对应项目fiddler_log目录
-网站前端：Nodejs Vue 2.9 vue-admin-template前端框架   对应项目client
-后端：Flask网站接口，Python完成漏洞检测。  对应项目目录server
-release  编译好的文件
-数据库: MySQL5.6
+* Fiddler插件：C#开发   VS2015编译  对应项目fiddler_log目录
+
+* 网站前端：Nodejs Vue 2.9 vue-admin-template前端框架   对应项目client
+
+* 后端：Flask网站接口，Python完成漏洞检测。  对应项目目录server
+
+* release：  编译好的文件
+
+* 数据库: MySQL5.6
 
 ![structure](./img/pic.png)
 
