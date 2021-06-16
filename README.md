@@ -102,13 +102,13 @@
 2. 拉取Docker镜像
 
    ```bash
-   sudo docker push kalagin/fiddler_tools:v1.0
+   sudo docker push kalagin/fiddler_tools:latest
    ```
 
 3. 启动容器并修改后端接口
 
    ```bash
-   sudo docker run -ti -p 80:80 -e MYSQL_URI=mysql://root:PASSWORD@192.168.32.132:3306/fiddler_log -d kalagin/fiddler_tools:v1.0
+   sudo docker run -ti -p 80:80 -e MYSQL_URI=mysql://root:PASSWORD@192.168.32.132:3306/fiddler_log -d kalagin/fiddler_tools:latest
    ```
 
    其中PASSWORD对应数据库密码，IP对应宿主机IP
@@ -141,6 +141,32 @@
 
    访问 http://192.168.32.132 即可，VPS直接对应外网IP
 
+## 源码构建docker安装
+
+1. 下载项目源代码
+```bash
+sudo git clone https://github.com/wdsjxh/fiddler_tools.git
+cd fiddler_tools
+```
+2. 宿主机MySQL配置同上
+3. 修改后端ip接口
+```bash
+cd client/dist
+sudo vim config.js
+```
+app_api_url改成自己的后端地址，注意带上/api
+4. 切换到项目根目录，开始构建docker
+```bash
+sudo docker build -t fiddler_tools:test  .
+```
+**注意最后的"."**，tag名字可以自定义
+
+5. 开始运行项目
+```bash
+sudo docker run -ti -p 80:80 -e MYSQL_URI=mysql://root:PASSWORD@192.168.32.132:3306/fiddler_log -d kalagin/fiddler_tools:test
+```
+6. 访问 http://192.168.32.132 即可，VPS直接对应外网IP，虚拟机安装对应虚拟机IP
+
 ## 源码安装
 
 插件编译
@@ -152,7 +178,7 @@
 1. `python3 -m pip install -r requirements.txt`
 2. 新建数据库fiddler_log(utf8编码)，导入数据库文件fiddler_log_structure.sql
 3. config/dbconfig.py中的mysqlhost数据库配置，数据库名**fiddler_log**
-   **my_api**填写域名或ip
+   ~~**my_api**填写域名或ip~~，**my_api_path**处填写前端打包文件夹dist中配置文件config.js的路径，和“前端打包”中的第二步相对应，docker部署下是/fiddler_tools/client/dist/config.js，自己源码安装以实际路径为准。
 4. flask_main.py 本地开发环境，flask_main_online.py 线上环境
 5. 运行`python3 flask_main.py` 本地  运行`python3 flask_main_online.py` 线上环境
 6. 再运行监听扫描状态文件scan_main.py `python3 scan_main.py`
