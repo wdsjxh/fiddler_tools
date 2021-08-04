@@ -27,6 +27,10 @@
 
 2021.6.11——添加docker部署
 
+## 漏洞检测说明:
+
+![image-20210804101309693](https://cdn.jsdelivr.net/gh/wdsjxh/Pictures@master/imgs/20210804101312.png)
+
 ## Docker安装（推荐）以Kali2021.1版本部署为例
 
 1. 宿主机MySQL配置，目前使用的宿主机MySQL保存数据
