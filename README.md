@@ -23,7 +23,7 @@
 
 ![Dashboard](./img/Snipaste_2020-11-30_16-15-29.png)
 
-## Change:
+## Change Log:
 
 2021.6.11——添加docker部署
 
@@ -274,6 +274,15 @@ sudo docker run -ti -p 80:80 -e MYSQL_URI=mysql://root:PASSWORD@192.168.32.132:3
    Dashboard/项目配置/扫描任务启动配置，选择配置之后启动
 
 <font color=red>备注：用户名、密码处已废弃，选择"越权排除列表"表示当前抓取公共页面或者访客用户登录，为了降低访问到新闻页、公开数据页导致的越权检测误报。</font>
+
+
+
+## 常见问题
+1、MySQL数据库报错Index column size too large. The maximum column size is 767 bytes.
+MySQL5.6版本默认有索引长度限制，解决方案可参考：[Index column size too large. The maximum column size is 767 bytes](https://github.com/wdsjxh/fiddler_tools/issues/1)和<https://stackoverflow.com/questions/30761867/mysql-error-the-maximum-column-size-is-767-bytes>
+
+## 错误排查
+容器var/log/supervisor目录下，保存所有输出日志和错误日志
 
 ## TODO
 
