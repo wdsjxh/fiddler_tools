@@ -278,7 +278,8 @@ sudo docker run -ti -p 80:80 -e MYSQL_URI=mysql://root:PASSWORD@192.168.32.132:3
 
 
 ## 常见问题
-1、MySQL数据库报错Index column size too large. The maximum column size is 767 bytes.
+1、MySQL数据库报错Index column size too large. The maximum column size is 767 bytes.  
+
 MySQL5.6版本默认有索引长度限制，解决方案可参考：[Index column size too large. The maximum column size is 767 bytes](https://github.com/wdsjxh/fiddler_tools/issues/1)和<https://stackoverflow.com/questions/30761867/mysql-error-the-maximum-column-size-is-767-bytes>
 
 ## 错误排查
