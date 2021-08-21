@@ -135,7 +135,7 @@
 
    config.js是配置后端接口文件
 
-   修改app_api_url为自己ip地址，VPS的话是外网IP，注意后面带一个/api
+   修改app_api_url为自己ip地址+端口（前面宿主机非80端口  -p 8003:80，使用8003），VPS的话是外网IP，配置了域名的话直接用域名，**注意后面带一个/api**
 
 4. 重启容器
 
@@ -158,7 +158,7 @@ cd fiddler_tools
 cd client/dist
 sudo vim config.js
 ```
-app_api_url改成自己的后端地址，注意带上/api
+app_api_url改成自己的后端地址，##注意带上/api##
 4. 切换到项目根目录，开始构建docker
 ```bash
 sudo docker build -t fiddler_tools:test  .
